@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: Notes
+  description: A simple API for creating, reading, updating, and deleting notes.
+  contact:
+
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /api/notes:
+    post:
+      summary: Create a new note
+      tags:
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Sample Note
+                description:
+                  type: string
+                  example: This is a description of the note.
+      responses:
+        201:
+          description: Note created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+        500:
+          description: Error while creating the note
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      summary: Get all notes
+      tags:
+        - Notes
+      responses:
+        201:
+          description: Notes fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Note"
+        500:
+          description: Error while fetching notes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/notes/{id}:
+    get:
+      summary: Get a note by ID
+      tags:
+        - Notes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The note ID
+      responses:
+        201:
+          description: Note fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+        500:
+          description: Error while fetching the note
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update a note by ID
+      tags:
+        - Notes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The note ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Updated Note
+                description:
+                  type: string
+                  example: This is an updated description of the note.
+      responses:
+        201:
+          description: Note updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+        500:
+          description: Error while updating the note
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a note by ID
+      tags:
+        - Notes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The note ID
+      responses:
+        201:
+          description: Note deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+        500:
+          description: Error while deleting the note
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+      example:
+        _id: 6123abc123456789abcdef01
+        title: Sample Note
+        description: This is a description of the note.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      example:
+        error: An error occurred while processing the request.

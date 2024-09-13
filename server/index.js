@@ -3,6 +3,9 @@ const cors = require("cors");
 const express = require("express");
 const connectDB = require("./connectDB");
 const Notes = require("./models/Notes");
+const swaggerui = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -13,8 +16,10 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use("/api-docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
+
 // routes
-// add note
+// create new note
 app.post("/api/notes", async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -95,10 +100,6 @@ app.delete("/api/notes/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "An error occured while deleting the note" });
   }
-});
-
-app.get("/", (req, res) => {
-  res.json("Hello World");
 });
 
 app.listen(PORT, () => {
