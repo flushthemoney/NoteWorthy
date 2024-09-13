@@ -1,9 +1,10 @@
 openapi: 3.0.0
 info:
-  title: Notes
-  description: A simple API for creating, reading, updating, and deleting notes.
+  title: NoteWorthy API Documentation
+  description: A simple CRUD API for NoteWorthy.
   contact:
-
+    name: flushthemoney
+    url: https://www.github.com/flushthemoney
   version: 1.0.0
 servers:
   - url: http://localhost:8000
@@ -162,10 +163,3 @@ components:
         _id: 6123abc123456789abcdef01
         title: Sample Note
         description: This is a description of the note.
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-      example:
-        error: An error occurred while processing the request.
