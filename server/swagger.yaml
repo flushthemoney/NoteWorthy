@@ -7,7 +7,7 @@ info:
     url: https://www.github.com/flushthemoney
   version: 1.0.0
 servers:
-  - url: http://localhost:8000
+  - url: http://148.135.6.154
 
 paths:
   /api/notes:
