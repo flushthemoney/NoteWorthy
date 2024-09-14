@@ -2,7 +2,7 @@
 
 Just a small practice project to build, document & deploy a CRUD API. It provides an interface to a note management application
 
-You can view the play with the live implementation [here](https://flushthemoney.com/api-docs)
+You can play with the live implementation [here](https://flushthemoney.com/api-docs)
 
 ## Built Using
 
