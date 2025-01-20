@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
-  title: NoteWorthy Documentation
-  description: A simple API for performing CRUD functions on a sticky note app.
+  title: NoteWorthy API Documentation
+  description: A RESTful API with CRUD functionality, designed for note management applications
   contact:
     name: flushthemoney
     url: https://www.github.com/flushthemoney
   version: 1.0.0
 servers:
-  - url: https://flushthemoney.com
+  - url: http://localhost:8000/
 
 paths:
   /api/notes:

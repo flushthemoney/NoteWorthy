@@ -5,6 +5,7 @@ const connectDB = require("./connectDB");
 const Notes = require("./models/Notes");
 const swaggerui = require("swagger-ui-express");
 const YAML = require("yamljs");
+const rateLimiter = require("./rateLimiter.js");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
@@ -12,11 +13,12 @@ const PORT = process.env.PORT || 8000;
 
 // mid
 connectDB();
+rateLimiter(app);
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/api-docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
+app.use("/NoteWorthy-API", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
 // routes
 // create new note
