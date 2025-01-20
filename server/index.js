@@ -22,7 +22,7 @@ app.use("/NoteWorthy-API", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
 // routes
 // create new note
-app.post("NoteWorthy/api/notes", async (req, res) => {
+app.post("/NoteWorthy/api/notes", async (req, res) => {
   try {
     const { title, description } = req.body;
 
@@ -39,7 +39,7 @@ app.post("NoteWorthy/api/notes", async (req, res) => {
 });
 
 // get all notes
-app.get("NoteWorthy/api/notes", async (req, res) => {
+app.get("/NoteWorthy/api/notes", async (req, res) => {
   try {
     const data = await Notes.find({});
 
@@ -56,7 +56,7 @@ app.get("NoteWorthy/api/notes", async (req, res) => {
 });
 
 // get note by id
-app.get("NoteWorthy/api/notes/:id", async (req, res) => {
+app.get("/NoteWorthy/api/notes/:id", async (req, res) => {
   try {
     const noteId = req.params.id;
     const data = await Notes.findById(noteId);
@@ -72,7 +72,7 @@ app.get("NoteWorthy/api/notes/:id", async (req, res) => {
 });
 
 // update note by id
-app.put("NoteWorthy/api/notes/:id", async (req, res) => {
+app.put("/NoteWorthy/api/notes/:id", async (req, res) => {
   try {
     const noteId = req.params.id;
     const { title, description } = req.body;
@@ -89,7 +89,7 @@ app.put("NoteWorthy/api/notes/:id", async (req, res) => {
 });
 
 // delete note by id
-app.delete("NoteWorthy/api/notes/:id", async (req, res) => {
+app.delete("/NoteWorthy/api/notes/:id", async (req, res) => {
   try {
     const noteId = req.params.id;
     const data = await Notes.findByIdAndDelete(noteId);
