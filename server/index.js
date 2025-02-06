@@ -6,23 +6,25 @@ const Notes = require("./models/Notes");
 const swaggerui = require("swagger-ui-express");
 const YAML = require("yamljs");
 const rateLimiter = require("./rateLimiter.js");
+const loggerMiddleware = require("./logger.js");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 
 // mid
 connectDB();
 rateLimiter(app);
+
 app.use(cors());
+app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.use("/NoteWorthy-API", swaggerui.serve, swaggerui.setup(swaggerDocument));
+app.use("/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
 // routes
 // create new note
-app.post("/NoteWorthy/api/notes", async (req, res) => {
+app.post("/api/notes", async (req, res) => {
   try {
     const { title, description } = req.body;
 
@@ -39,7 +41,7 @@ app.post("/NoteWorthy/api/notes", async (req, res) => {
 });
 
 // get all notes
-app.get("/NoteWorthy/api/notes", async (req, res) => {
+app.get("/api/notes", async (req, res) => {
   try {
     const data = await Notes.find({});
 
@@ -56,7 +58,7 @@ app.get("/NoteWorthy/api/notes", async (req, res) => {
 });
 
 // get note by id
-app.get("/NoteWorthy/api/notes/:id", async (req, res) => {
+app.get("/api/notes/:id", async (req, res) => {
   try {
     const noteId = req.params.id;
     const data = await Notes.findById(noteId);
@@ -72,7 +74,7 @@ app.get("/NoteWorthy/api/notes/:id", async (req, res) => {
 });
 
 // update note by id
-app.put("/NoteWorthy/api/notes/:id", async (req, res) => {
+app.put("/api/notes/:id", async (req, res) => {
   try {
     const noteId = req.params.id;
     const { title, description } = req.body;
@@ -89,7 +91,7 @@ app.put("/NoteWorthy/api/notes/:id", async (req, res) => {
 });
 
 // delete note by id
-app.delete("/NoteWorthy/api/notes/:id", async (req, res) => {
+app.delete("/api/notes/:id", async (req, res) => {
   try {
     const noteId = req.params.id;
     const data = await Notes.findByIdAndDelete(noteId);
@@ -102,6 +104,10 @@ app.delete("/NoteWorthy/api/notes/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "An error occured while deleting the note" });
   }
+});
+
+app.get("/", (req, res) => {
+  res.redirect("/docs");
 });
 
 app.listen(PORT, () => {

@@ -7,7 +7,7 @@ info:
     url: https://www.github.com/flushthemoney
   version: 1.0.0
 servers:
-  - url: http://localhost:8000/
+  - url: https://noteworthy.flushthemoney.com
 
 paths:
   /api/notes:
